@@ -14,9 +14,10 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
     <jms:activemq-connector name="Active_MQ" brokerURL="vm://localhost:61616" validateConnections="true" doc:name="Active MQ"/>
     <flow name="maven_newprojectFlow">
         <http:listener config-ref="HTTP_Listener_Configuration" path="/Hello" doc:name="HTTP"/>
-        <db:select config-ref="Oracle_Configuration" doc:name="Database">
-            <db:parameterized-query><![CDATA[Select * FROM Countries]]></db:parameterized-query>
-        </db:select>
+<!--         <db:select config-ref="Oracle_Configuration" doc:name="Database"> -->
+<!--             <db:parameterized-query><![CDATA[Select * FROM Countries]]></db:parameterized-query> -->
+<!--         </db:select> -->
+        <set-payload doc:name="Set Payload" value="#['Message To JMS']"/>
         <json:object-to-json-transformer doc:name="Object to JSON"/>
         <jms:outbound-endpoint queue="countries" doc:name="JMS" connector-ref="Active_MQ"/>
         <logger level="INFO" doc:name="Logger" message="#[message.payload]"/>
