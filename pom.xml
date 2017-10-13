@@ -29,7 +29,7 @@
 <password>Soujin@218</password>
 <workerType>Micro</workerType>
 <redeploy>true</redeploy>
-<environment>SandBox</environment>
+<environment>Production</environment>
 </configuration>
 <executions>
 <execution>
