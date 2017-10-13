@@ -10,16 +10,19 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
     <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
-    <db:oracle-config name="Oracle_Configuration" host="172.16.120.97" port="1521" instance="whdb" user="hr" password="hr" doc:name="Oracle Configuration"/>
+<!--     <db:oracle-config name="Oracle_Configuration" host="172.16.120.97" port="1521" instance="whdb" user="hr" password="hr" doc:name="Oracle Configuration"/> -->
     <jms:activemq-connector name="Active_MQ" brokerURL="vm://localhost:61616" validateConnections="true" doc:name="Active MQ"/>
     <flow name="maven_newprojectFlow">
         <http:listener config-ref="HTTP_Listener_Configuration" path="/Hello" doc:name="HTTP"/>
 <!--         <db:select config-ref="Oracle_Configuration" doc:name="Database"> -->
 <!--             <db:parameterized-query><![CDATA[Select * FROM Countries]]></db:parameterized-query> -->
 <!--         </db:select> -->
-        <set-payload doc:name="Set Payload" value="#['Message To JMS']"/>
-        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <set-payload doc:name="Set Payload" value="#['Hello Maven']"/>
         <jms:outbound-endpoint queue="countries" doc:name="JMS" connector-ref="Active_MQ"/>
         <logger level="INFO" doc:name="Logger" message="#[message.payload]"/>
+    </flow>
+    <flow name="maven_newprojectFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/helloMaven" doc:name="HTTP"/>
+        <set-payload value="#['Hello Maven']" doc:name="Set Payload"/>
     </flow>
 </mule>
